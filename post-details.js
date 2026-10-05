@@ -25,6 +25,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
     commentsDiv.classList.add('comments');
     postDiv.appendChild(commentsDiv)
 
+
     fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
         .then(value => value.json())
         .then(comments => {
@@ -41,4 +42,6 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
                 commentsDiv.appendChild(commentDiv)
             }
         })
+        .catch(error => console.log(error));
 })
+    .catch(error => console.log(error));

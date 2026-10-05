@@ -15,8 +15,8 @@ body{
     background: #fdfdec;
     border-radius: 5px;
     border: 3px solid #e5f4e2;
-    gap: 150px;
-    padding-top: 20px;
+    gap: 20px;
+    padding-top: 10px;
     color: #502507;
 }
 .postsDiv{

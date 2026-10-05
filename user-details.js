@@ -12,16 +12,27 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
 .then(value => value.json())
 .then(user =>{
     console.log(user);
-    userDiv.innerText = `
-    ID: ${user.id}
-    Name: ${user.name}
-    Address: city - ${user.address.city}, street - ${user.address.street}, suite - ${user.address.suite}, zipcode - ${user.address.zipcode}
-    Company: bs - ${user.company.bs}, catchPhrase - ${user.company.catchPhrase}, name - ${user.company.name}
-    Email: ${user.email}
-    Phone: ${user.phone}
-    Website: ${user.website}
-    Username: ${user.username}
-    `
+    for (const [key, value] of Object.entries(user)) {
+        if (typeof value === 'object') {
+            for (const [key2, value2] of Object.entries(value)) {
+                if (typeof value2 === 'object') {
+                    for (const [key3, value3] of Object.entries(value2)) {
+                        const div = document.createElement('div');
+                        div.innerText = `${key3}: ${value3}`;
+                        userDiv.appendChild(div);
+                    }
+                }else {
+                    const div = document.createElement('div');
+                    div.innerText = `${key2}: ${value2}`;
+                    userDiv.appendChild(div);
+                }
+            }
+        }else {
+            const div = document.createElement('div');
+            div.innerText = `${key}: ${value}`;
+            userDiv.appendChild(div);
+        }
+    }
 
     const postsDiv = document.createElement('div');
     postsDiv.classList.add('postsDiv');
@@ -33,6 +44,7 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
         .then(value => value.json())
         .then(posts => {
             console.log(posts);
+            postsDiv.innerHTML = ''
             for (const post of posts) {
                 const div = document.createElement('div');
                 div.classList.add('postDiv');
@@ -44,7 +56,9 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
                 postsDiv.appendChild(div);
             }
         })
+            .catch(error => console.log(error));
     }
     userDiv.append(button, postsDiv)
 })
+    .catch(error => console.log(error));
 const userDiv = document.getElementById('user');
